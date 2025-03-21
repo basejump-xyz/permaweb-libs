@@ -1,6 +1,7 @@
 import { AO, GATEWAYS } from 'helpers/config';
 import { getTxEndpoint } from 'helpers/endpoints';
 import {
+	GQLQueryOptsType,
 	DependencyType,
 	MessageDryRunType,
 	MessageResultType,
@@ -13,9 +14,8 @@ import { getTagValue, globalLog } from 'helpers/utils';
 
 import { getGQLData } from './gql';
 
-const GATEWAY = GATEWAYS.goldsky;
-
-const GATEWAY_RETRY_COUNT = 100;
+const DEFAULT_GQL_GATEWAY = GATEWAYS.goldsky;
+const DEFAULT_GQL_RETRY_COUNT = 100;
 
 export async function aoSpawn(deps: DependencyType, args: ProcessSpawnType): Promise<string> {
 	const tags = [{ name: 'Authority', value: AO.mu }];
@@ -41,7 +41,7 @@ export async function aoSpawn(deps: DependencyType, args: ProcessSpawnType): Pro
 export function aoSendWith(deps: DependencyType) {
 	return async (args: MessageSendType) => {
 		return await aoSend(deps, args);
-	}
+	};
 }
 
 export async function aoSend(deps: DependencyType, args: MessageSendType): Promise<string> {
@@ -67,7 +67,7 @@ export async function aoSend(deps: DependencyType, args: MessageSendType): Promi
 export function aoDryRunWith(deps: DependencyType) {
 	return async (args: MessageSendType) => {
 		return await aoDryRun(deps, args);
-	}
+	};
 }
 
 export async function aoDryRun(deps: DependencyType, args: MessageDryRunType): Promise<any> {
@@ -158,7 +158,7 @@ export async function aoMessageResults(
 		data: any;
 		responses?: string[];
 		handler?: string;
-	},
+	}
 ): Promise<any> {
 	try {
 		const tags = [{ name: 'Action', value: args.action }];
@@ -246,7 +246,7 @@ export async function handleProcessEval(
 		evalTxId: string | null;
 		evalSrc: string | null;
 		evalTags?: TagType[];
-	},
+	}
 ): Promise<string | null> {
 	let src: string | null = null;
 
@@ -294,9 +294,9 @@ export function aoCreateProcessWith(deps: DependencyType) {
 			statusCB && statusCB(`Spawning process...`);
 			const processId = await aoSpawn(deps, spawnArgs);
 
-			statusCB && statusCB(`Retrieving process...`);
-			await waitForProcess(processId, statusCB);
-			
+			statusCB && statusCB(`Retrieving process`);
+			await waitForProcess(processId, statusCB, deps.gql);
+
 			if (args.evalTxId || args.evalSrc) {
 				statusCB && statusCB(`Process retrieved!`);
 				statusCB && statusCB('Sending eval...');
@@ -325,7 +325,7 @@ export function aoCreateProcessWith(deps: DependencyType) {
 export async function aoCreateProcess(
 	deps: DependencyType,
 	args: ProcessCreateType,
-	statusCB?: (status: any) => void,
+	statusCB?: (status: any) => void
 ): Promise<string> {
 	try {
 		const spawnArgs: any = {
@@ -339,8 +339,8 @@ export async function aoCreateProcess(
 		statusCB && statusCB(`Spawning process...`);
 		const processId = await aoSpawn(deps, spawnArgs);
 
-		statusCB && statusCB(`Retrieving process...`);
-		await waitForProcess(processId, statusCB);
+		statusCB && statusCB(`Retrieving process`);
+		await waitForProcess(processId, statusCB, deps.gql);
 
 		if (args.evalTxId || args.evalSrc) {
 			statusCB && statusCB(`Process retrieved!`);
@@ -366,23 +366,29 @@ export async function aoCreateProcess(
 	}
 }
 
-export async function waitForProcess(processId: string, _setStatus?: (status: any) => void) {
+export async function waitForProcess(
+	processId: string,
+	_setStatus?: (status: any) => void,
+	gql: GQLQueryOptsType = {}
+): Promise<string> {
+	const gateway = gql.gateway || DEFAULT_GQL_GATEWAY;
+	const retryCount = gql.retryCount || DEFAULT_GQL_RETRY_COUNT;
+	_setStatus && _setStatus(`Querying for ${processId} (${gateway}; ${retryCount} tries)`);
 	let retries = 0;
-
-	while (retries < GATEWAY_RETRY_COUNT) {
+	while (retries < retryCount) {
 		await new Promise((r) => setTimeout(r, 2000));
 
 		const gqlResponse = await getGQLData({
-			gateway: GATEWAY,
+			gateway,
 			ids: [processId],
 		});
 
 		if (gqlResponse?.data?.length) {
 			const foundProcess = gqlResponse.data[0].node.id;
-			globalLog(`Process found: ${foundProcess} (Try ${retries + 1})`);
+			globalLog(`Process found: ${foundProcess} (${gateway}; try ${retries + 1})`);
 			return foundProcess;
 		} else {
-			globalLog(`Process not found: ${processId} (Try ${retries + 1})`);
+			globalLog(`Process not found: ${processId} (${gateway}; try ${retries + 1})`);
 			retries++;
 		}
 	}

@@ -47,7 +47,7 @@ export async function getAtomicAsset(
 
 		if (args?.useGateway) {
 			const gqlResponse = await getGQLData({
-				gateway: GATEWAYS.goldsky,
+				gateway: deps.gql?.gateway || GATEWAYS.goldsky,
 				ids: [id],
 				tags: null,
 				owners: null,

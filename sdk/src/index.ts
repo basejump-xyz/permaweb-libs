@@ -1,6 +1,6 @@
 import { Buffer } from 'buffer';
 
-import * as Helpers from 'helpers';
+import * as Helpers from './helpers';
 
 import * as Common from './common';
 import * as Services from './services';

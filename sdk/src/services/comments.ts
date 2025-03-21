@@ -79,7 +79,7 @@ export function getCommentsWith(_deps: DependencyType) {
 			});
 
 		const gqlResponse = await getGQLData({
-			gateway: GATEWAYS.goldsky,
+			gateway: _deps.gql?.gateway || GATEWAYS.goldsky,
 			ids: null,
 			tags,
 			owners: null,
