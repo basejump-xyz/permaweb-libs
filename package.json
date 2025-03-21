@@ -1,10 +1,32 @@
 {
+  "name": "@permaweb/libs",
   "private": true,
+  "version": "0.0.26",
+  "description": "Permaweb libraries for interacting with the permaweb",
   "main": "./sdk/dist/index.cjs",
   "module": "./sdk/dist/index.js",
   "browser": "./sdk/dist/index.esm.js",
   "types": "./sdk/dist/types/index.d.ts",
+  "files": [
+    "sdk/dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./sdk/dist/types/index.d.ts",
+      "import": "./sdk/dist/index.esm.js",
+      "require": "./sdk/dist/index.cjs",
+      "default": "./sdk/dist/index.js"
+    },
+    "./browser": "./sdk/dist/index.esm.js",
+    "./node": "./sdk/dist/index.js"
+  },
   "scripts": {
     "prepare": "cd sdk && npm install && npm run build"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/basejump-xyz/permaweb-libs.git"
   }
 }
