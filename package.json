@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "main": "./sdk/dist/index.cjs",
+  "module": "./sdk/dist/index.js",
+  "browser": "./sdk/dist/index.esm.js",
+  "types": "./sdk/dist/types/index.d.ts",
+  "scripts": {
+    "prepare": "cd sdk && npm install && npm run build"
+  }
+}
