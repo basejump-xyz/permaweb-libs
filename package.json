@@ -1,32 +1,22 @@
 {
-  "name": "@permaweb/libs",
+  "name": "permaweb-libs-monorepo",
+  "version": "0.0.1",
   "private": true,
-  "version": "0.0.26",
-  "description": "Permaweb libraries for interacting with the permaweb",
-  "main": "./sdk/dist/index.cjs",
-  "module": "./sdk/dist/index.js",
-  "browser": "./sdk/dist/index.esm.js",
-  "types": "./sdk/dist/types/index.d.ts",
-  "files": [
-    "sdk/dist",
-    "README.md"
+  "description": "Monorepo for @permaweb/libs SDK and related Lua components",
+  "workspaces": [
+    "sdk"
   ],
-  "exports": {
-    ".": {
-      "types": "./sdk/dist/types/index.d.ts",
-      "import": "./sdk/dist/index.esm.js",
-      "require": "./sdk/dist/index.cjs",
-      "default": "./sdk/dist/index.js"
-    },
-    "./browser": "./sdk/dist/index.esm.js",
-    "./node": "./sdk/dist/index.js"
-  },
   "scripts": {
-    "prepare": "cd sdk && npm install && npm run build"
+    "build": "npm run build -ws --if-present",
+    "prepare": "npm run build"
   },
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/basejump-xyz/permaweb-libs.git"
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "esbuild": "^0.24.2",
+    "eslint": "^8.35.0",
+    "prettier": "^3.x.x"
   }
 }

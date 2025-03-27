@@ -41,7 +41,8 @@
 	},
 	"scripts": {
 		"format": "eslint --fix . && npx prettier --write .",
-		"build": "node build.js"
+		"build": "rm -rf dist && node build.js",
+		"prepare": "npm run build"
 	},
 	"dependencies": {
 		"arweave": "^1.15.5",

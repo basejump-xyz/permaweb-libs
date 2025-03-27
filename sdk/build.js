@@ -1,13 +1,22 @@
 import esbuild from 'esbuild';
 import dtsPlugin from 'esbuild-plugin-d.ts';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module'; // <-
+
+// Helper to get __dirname in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Create a require function relative to the current module
+const require = createRequire(import.meta.url); // <-- Create require
 
 const sharedConfig = {
 	entryPoints: ['src/index.ts'],
 	bundle: true,
 	sourcemap: true,
 	minify: true,
-	inject: [path.resolve('node_modules/process/browser.js')], // Explicitly inject the process polyfill
+  inject: [require.resolve('process/browser')], // <-- CHANGE THIS LINE
 	define: {
 		'process.env.NODE_ENV': JSON.stringify('production'),
 	},
