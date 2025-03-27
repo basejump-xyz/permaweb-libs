@@ -7,7 +7,7 @@ const sharedConfig = {
 	bundle: true,
 	sourcemap: true,
 	minify: true,
-	inject: [path.resolve('node_modules/process/browser.js')], // Explicitly inject the process polyfill
+  inject: [require.resolve('process/browser')], // <-- CHANGE THIS LINE
 	define: {
 		'process.env.NODE_ENV': JSON.stringify('production'),
 	},
