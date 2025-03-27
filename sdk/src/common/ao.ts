@@ -1,5 +1,5 @@
-import { AO, GATEWAYS } from 'helpers/config';
-import { getTxEndpoint } from 'helpers/endpoints';
+import { AO, GATEWAYS } from '../helpers/config';
+import { getTxEndpoint } from '../helpers/endpoints';
 import {
 	GQLQueryOptsType,
 	DependencyType,
@@ -9,8 +9,8 @@ import {
 	ProcessCreateType,
 	ProcessSpawnType,
 	TagType,
-} from 'helpers/types';
-import { getTagValue, globalLog } from 'helpers/utils';
+} from '../helpers/types';
+import { getTagValue, globalLog } from '../helpers/utils';
 
 import { getGQLData } from './gql';
 

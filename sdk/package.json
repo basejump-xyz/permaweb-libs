@@ -7,62 +7,63 @@
 	"browser": "./dist/index.esm.js",
 	"types": "./dist/types/index.d.ts",
 	"typesVersions": {
-		"*": {
-			"browser": [
-				"./dist/types/index.d.ts"
-			],
-			".": [
-				"./dist/types/index.d.ts"
-			]
-		}
+			"*": {
+					"browser": [
+							"./dist/types/index.d.ts"
+					],
+					".": [
+							"./dist/types/index.d.ts"
+					]
+			}
 	},
 	"description": "",
 	"files": [
-		"dist",
-		"README.md"
+			"dist",
+			"README.md"
 	],
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"repository": {
-		"type": "git",
-		"url": "https://github.com/permaweb/permaweb-libs.git",
-		"directory": "sdk"
+			"type": "git",
+			"url": "https://github.com/permaweb/permaweb-libs.git",
+			"directory": "sdk"
 	},
 	"exports": {
-		".": {
-			"types": "./dist/types/index.d.ts",
-			"import": "./dist/index.esm.js",
-			"require": "./dist/index.cjs",
-			"default": "./dist/index.js"
-		},
-		"./browser": "./dist/index.esm.js",
-		"./node": "./dist/index.js"
+			".": {
+					"types": "./dist/types/index.d.ts",
+					"import": "./dist/index.esm.js",
+					"require": "./dist/index.cjs",
+					"default": "./dist/index.js"
+			},
+			"./browser": "./dist/index.esm.js",
+			"./node": "./dist/index.js"
 	},
 	"scripts": {
-		"format": "eslint --fix . && npx prettier --write .",
-		"build": "rm -rf dist && node build.js",
-		"prepare": "npm run build"
+			"format": "eslint --fix . && npx prettier --write .",
+			"build": "rm -rf dist && node build.js",
+			"prepare": "npm run build",
+			"prepack": "npm run build"
 	},
 	"dependencies": {
-		"arweave": "^1.15.5",
-		"buffer": "^6.0.3",
-		"process": "^0.11.10",
-		"tsc-alias": "^1.8.10"
+			"arweave": "^1.15.5",
+			"buffer": "^6.0.3",
+			"process": "^0.11.10",
+			"tsc-alias": "^1.8.10"
 	},
 	"devDependencies": {
-		"@types/async-retry": "^1.4.9",
-		"@types/node": "^22.10.4",
-		"@typescript-eslint/eslint-plugin": "^5.57.1",
-		"@typescript-eslint/parser": "^5.57.1",
-		"esbuild": "^0.24.2",
-		"esbuild-plugin-d.ts": "^1.3.1",
-		"eslint": "^8.35.0",
-		"eslint-plugin-import": "^2.27.5",
-		"eslint-plugin-simple-import-sort": "^10.0.0",
-		"ts-loader": "^9.5.1",
-		"typescript": "^5.7.2",
-		"webpack": "^5.97.1",
-		"webpack-cli": "^6.0.1"
+			"@types/async-retry": "^1.4.9",
+			"@types/node": "^22.10.4",
+			"@typescript-eslint/eslint-plugin": "^5.57.1",
+			"@typescript-eslint/parser": "^5.57.1",
+			"esbuild": "^0.24.2",
+			"esbuild-plugin-d.ts": "^1.3.1",
+			"eslint": "^8.35.0",
+			"eslint-plugin-import": "^2.27.5",
+			"eslint-plugin-simple-import-sort": "^10.0.0",
+			"ts-loader": "^9.5.1",
+			"typescript": "^5.7.2",
+			"webpack": "^5.97.1",
+			"webpack-cli": "^6.0.1"
 	}
 }

@@ -1,10 +1,10 @@
-import { aoCreateProcess, aoDryRun, aoSend } from 'common/ao';
-import { resolveTransaction } from 'common/arweave';
+import { aoCreateProcess, aoDryRun, aoSend } from '../common/ao';
+import { resolveTransaction } from '../common/arweave';
 
-import { AO, TAGS } from 'helpers/config';
-import { getTxEndpoint } from 'helpers/endpoints';
-import { CollectionDetailType, CollectionType, DependencyType, TagType } from 'helpers/types';
-import { cleanProcessField, cleanTagValue, globalLog } from 'helpers/utils';
+import { AO, TAGS } from '../helpers/config';
+import { getTxEndpoint } from '../helpers/endpoints';
+import { CollectionDetailType, CollectionType, DependencyType, TagType } from '../helpers/types';
+import { cleanProcessField, cleanTagValue, globalLog } from '../helpers/utils';
 
 const DEFAULT_COLLECTION_BANNER = 'eXCtpVbcd_jZ0dmU2PZ8focaKxBGECBQ8wMib7sIVPo';
 const DEFAULT_COLLECTION_THUMBNAIL = 'lJovHqM9hwNjHV5JoY9NGWtt0WD-5D4gOqNL2VWW5jk';

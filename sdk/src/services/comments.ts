@@ -1,7 +1,7 @@
-import { getGQLData } from 'common/gql';
+import { getGQLData } from '../common/gql';
 
-import { GATEWAYS } from 'helpers/config';
-import { getTxEndpoint } from 'helpers/endpoints';
+import { GATEWAYS } from '../helpers/config';
+import { getTxEndpoint } from '../helpers/endpoints';
 import {
 	AssetCreateArgsType,
 	CommentCreateArgType,
@@ -9,7 +9,7 @@ import {
 	DependencyType,
 	GQLNodeResponseType,
 	TagFilterType,
-} from 'helpers/types';
+} from '../helpers/types';
 
 import { buildAsset, createAtomicAssetWith, getAtomicAsset } from './assets';
 

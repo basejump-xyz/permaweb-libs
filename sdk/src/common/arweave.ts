@@ -1,9 +1,9 @@
 /* Used for build - Do not remove ! */
 import Arweave from 'arweave';
 
-import { TAGS, UPLOAD } from 'helpers/config';
-import { DependencyType, TagType } from 'helpers/types';
-import { checkValidAddress, getBase64Data, getByteSize, getDataURLContentType, globalLog } from 'helpers/utils';
+import { TAGS, UPLOAD } from '../helpers/config';
+import { DependencyType, TagType } from '../helpers/types';
+import { checkValidAddress, getBase64Data, getByteSize, getDataURLContentType, globalLog } from '../helpers/utils';
 
 export function resolveTransactionWith(deps: DependencyType) {
 	return async (data: any) => {

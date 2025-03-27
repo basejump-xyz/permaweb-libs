@@ -1,10 +1,10 @@
-import { aoCreateProcess, aoDryRun, aoSend } from 'common/ao';
-import { resolveTransaction } from 'common/arweave';
-import { getGQLData } from 'common/gql';
+import { aoCreateProcess, aoDryRun, aoSend } from '../common/ao';
+import { resolveTransaction } from '../common/arweave';
+import { getGQLData } from '../common/gql';
 
-import { AO, GATEWAYS, TAGS } from 'helpers/config';
-import { DependencyType, GQLNodeResponseType, ProfileArgsType, ProfileType } from 'helpers/types';
-import { getBootTag, globalLog, mapFromProcessCase } from 'helpers/utils';
+import { AO, GATEWAYS, TAGS } from '../helpers/config';
+import { DependencyType, GQLNodeResponseType, ProfileArgsType, ProfileType } from '../helpers/types';
+import { getBootTag, globalLog, mapFromProcessCase } from '../helpers/utils';
 
 import { createZoneWith, getZoneWith, updateZoneWith } from './zones';
 

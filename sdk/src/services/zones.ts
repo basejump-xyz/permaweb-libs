@@ -1,8 +1,8 @@
-import { aoCreateProcess, aoDryRun, aoSend } from 'common/ao';
+import { aoCreateProcess, aoDryRun, aoSend } from '../common/ao';
 
-import { AO, TAGS } from 'helpers/config';
-import { DependencyType, TagType } from 'helpers/types';
-import { mapFromProcessCase } from 'helpers/utils';
+import { AO, TAGS } from '../helpers/config';
+import { DependencyType, TagType } from '../helpers/types';
+import { mapFromProcessCase } from '../helpers/utils';
 
 export function createZoneWith(deps: DependencyType) {
 	return async (args: { tags?: TagType[] }, callback?: (status: any) => void): Promise<string | null> => {

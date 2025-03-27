@@ -1,7 +1,7 @@
-import { aoCreateProcess, aoDryRun } from 'common/ao';
-import { getGQLData } from 'common/gql';
+import { aoCreateProcess, aoDryRun } from '../common/ao';
+import { getGQLData } from '../common/gql';
 
-import { AO, CONTENT_TYPES, GATEWAYS, TAGS } from 'helpers/config';
+import { AO, CONTENT_TYPES, GATEWAYS, TAGS } from '../helpers/config';
 import {
 	AssetCreateArgsType,
 	AssetDetailType,
@@ -9,8 +9,8 @@ import {
 	DependencyType,
 	GQLNodeResponseType,
 	TagType,
-} from 'helpers/types';
-import { getBootTag, mapFromProcessCase, mapToProcessCase } from 'helpers/utils';
+} from '../helpers/types';
+import { getBootTag, mapFromProcessCase, mapToProcessCase } from '../helpers/utils';
 
 export function createAtomicAssetWith(deps: DependencyType) {
 	return async (args: AssetCreateArgsType, callback?: (status: any) => void) => {

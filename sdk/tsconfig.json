@@ -10,11 +10,6 @@
 		"skipLibCheck": true, // Skip type checks for node_modules
 		"moduleResolution": "node", // Use Node.js-style module resolution
 		"baseUrl": "src",
-		"paths": {
-			"common/*": ["common/*"],
-			"helpers/*": ["helpers/*"],
-			"services/*": ["services/*"]
-		}
 	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules", "dist"]
