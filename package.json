@@ -1,0 +1,22 @@
+{
+  "name": "permaweb-libs-monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Monorepo for @permaweb/libs SDK and related Lua components",
+  "workspaces": [
+    "sdk"
+  ],
+  "scripts": {
+    "build": "npm run build -ws --if-present",
+    "prepare": "npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "esbuild": "^0.24.2",
+    "eslint": "^8.35.0",
+    "prettier": "^3.x.x"
+  }
+}
