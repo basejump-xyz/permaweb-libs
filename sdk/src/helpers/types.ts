@@ -74,17 +74,18 @@ export type AssetCreateArgsType = {
 	data: any;
 	contentType: string;
 	assetType: string;
+	ticker?: string;
 	supply?: number;
 	denomination?: number;
 	transferable?: boolean;
-	metadata?: object;	
+	metadata?: object;
 	tags?: TagType[];
 	src?: string;
 };
 
 export type AssetHeaderType = {
 	id: string;
-	owner: string | null
+	owner: string | null;
 };
 
 export type AssetDetailType = {
@@ -99,22 +100,28 @@ export type AssetDetailType = {
 	metadata: any;
 	dateCreated: string;
 	lastUpdate: string;
-}
+};
 
 export type CommentHeaderType = {
-	id: string; 
+	id: string;
 	content: string;
-	parentId: string; 
-	rootId: string
+	parentId: string;
+	rootId: string;
 };
 
 export type CommentDetailType = {
 	content: string;
 	parentId: string;
 	rootId: string;
-}
+};
 
-export type CommentCreateArgType = { content: string; creator: string;  parentId: string; rootId?: string, tags?: TagType[] };
+export type CommentCreateArgType = {
+	content: string;
+	creator: string;
+	parentId: string;
+	rootId?: string;
+	tags?: TagType[];
+};
 
 export type CollectionManifestType = {
 	type: string;
