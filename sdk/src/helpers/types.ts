@@ -75,6 +75,7 @@ export type AssetCreateArgsType = {
 	data: any;
 	contentType: string;
 	assetType: string;
+	ticker?: string;
 	supply?: number;
 	denomination?: number;
 	transferable?: boolean;
