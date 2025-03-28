@@ -69,6 +69,7 @@ export type ProfileType = {
 
 export type AssetCreateArgsType = {
 	name: string;
+	ticker: string;
 	description: string;
 	topics: string[];
 	creator: string;

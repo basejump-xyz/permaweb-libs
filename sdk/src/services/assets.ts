@@ -9,8 +9,13 @@ import {
 	DependencyType,
 	GQLNodeResponseType,
 	TagType,
+<<<<<<< HEAD
 } from '../helpers/types';
 import { getBootTag, mapFromProcessCase, mapToProcessCase } from '../helpers/utils';
+=======
+} from 'helpers/types';
+import { getBootTag, mapFromProcessCase, mapToProcessCase } from 'helpers/utils';
+>>>>>>> dev
 
 export function createAtomicAssetWith(deps: DependencyType) {
 	return async (args: AssetCreateArgsType, callback?: (status: any) => void) => {
@@ -140,7 +145,7 @@ function buildAssetCreateTags(args: AssetCreateArgsType): { name: string; value:
 		getBootTag('Name', args.name),
 		getBootTag('Description', args.description),
 		getBootTag('Topics', JSON.stringify(args.topics)),
-		getBootTag('Ticker', args.ticker?.toString() ?? 'ATOMIC'),
+		getBootTag('Ticker', args.ticker ?? 'ATOMIC'),
 		getBootTag('Denomination', args.denomination?.toString() ?? '1'),
 		getBootTag('TotalSupply', args.supply?.toString() ?? '1'),
 		getBootTag('Transferable', args.transferable?.toString() ?? 'true'),
