@@ -141,8 +141,8 @@ function buildAssetCreateTags(args: AssetCreateArgsType): { name: string; value:
 		getBootTag('Description', args.description),
 		getBootTag('Topics', JSON.stringify(args.topics)),
 		getBootTag('Ticker', args.ticker ?? 'ATOMIC'),
-		getBootTag('Denomination', args.denomination?.toString() ?? '1'),
-		getBootTag('TotalSupply', args.supply?.toString() ?? '1'),
+		getBootTag('Denomination', args.denomination?.toString() ?? '0'),
+		getBootTag('TotalSupply', args.supply?.toString() ?? '0'),
 		getBootTag('Transferable', args.transferable?.toString() ?? 'true'),
 		getBootTag('Creator', args.creator),
 	];
@@ -175,10 +175,10 @@ function getValidationErrorMessage(args: AssetCreateArgsType): string | null {
 		return 'Content type must be a non-empty string';
 	if (typeof args.assetType !== 'string' || args.assetType.trim() === '') return 'Type must be a non-empty string';
 
-	if ('supply' in args && (typeof args.supply !== 'number' || args.supply <= 0))
-		return 'Supply must be a positive number';
-	if ('denomination' in args && (typeof args.denomination !== 'number' || args.denomination <= 0))
-		return 'Denomination must be a positive number';
+	if ('supply' in args && (typeof args.supply !== 'number' || args.supply < 0))
+		return 'Supply must be a non-negative number';
+	if ('denomination' in args && (typeof args.denomination !== 'number' || args.denomination < 0))
+		return 'Denomination must be a non-negative number';
 	if ('transferable' in args && typeof args.transferable !== 'boolean') return 'Transferable must be a boolean value';
 	if ('metadata' in args && typeof args.metadata !== 'object') return 'Metadata must be an object';
 	if ('tags' in args && (!Array.isArray(args.tags) || args.tags.some((tag) => typeof tag !== 'object')))
