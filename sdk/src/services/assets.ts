@@ -8,7 +8,7 @@ import {
 	AssetHeaderType,
 	DependencyType,
 	GQLNodeResponseType,
-	TagType
+	TagType,
 } from 'helpers/types';
 import { getBootTag, mapFromProcessCase, mapToProcessCase } from 'helpers/utils';
 
@@ -24,7 +24,7 @@ export function createAtomicAssetWith(deps: DependencyType) {
 			const assetId = await aoCreateProcess(
 				deps,
 				{ tags: tags, data: data },
-				callback ? (status) => callback(status) : undefined,
+				callback ? (status) => callback(status) : undefined
 			);
 
 			return assetId;
@@ -40,10 +40,12 @@ export async function getAtomicAsset(
 	args?: { useGateway?: boolean }
 ): Promise<AssetDetailType | null> {
 	try {
-		const processInfo = mapFromProcessCase(await aoDryRun(deps, {
-			processId: id,
-			action: 'Info',
-		}));
+		const processInfo = mapFromProcessCase(
+			await aoDryRun(deps, {
+				processId: id,
+				action: 'Info',
+			})
+		);
 
 		if (args?.useGateway) {
 			const gqlResponse = await getGQLData({
@@ -54,10 +56,8 @@ export async function getAtomicAsset(
 				cursor: null,
 			});
 
-			const gatewayAsset = gqlResponse?.data?.[0]
-				? buildAsset(gqlResponse.data[0])
-				: {};
-			
+			const gatewayAsset = gqlResponse?.data?.[0] ? buildAsset(gqlResponse.data[0]) : {};
+
 			return {
 				...gatewayAsset,
 				...processInfo,
@@ -66,8 +66,8 @@ export async function getAtomicAsset(
 
 		return {
 			id: id,
-			...processInfo
-		}
+			...processInfo,
+		};
 	} catch (e: any) {
 		throw new Error(e.message || 'Error fetching atomic asset');
 	}
@@ -112,9 +112,7 @@ export function buildAsset(element: GQLNodeResponseType): any {
 		const formattedKey = keyWithoutPrefix
 			.split('-')
 			.map((part, index) =>
-				index === 0
-					? part.toLowerCase()
-					: part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()
+				index === 0 ? part.toLowerCase() : part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()
 			)
 			.join('');
 
@@ -142,7 +140,7 @@ function buildAssetCreateTags(args: AssetCreateArgsType): { name: string; value:
 		getBootTag('Name', args.name),
 		getBootTag('Description', args.description),
 		getBootTag('Topics', JSON.stringify(args.topics)),
-		getBootTag('Ticker', 'ATOMIC'),
+		getBootTag('Ticker', args.ticker ?? 'ATOMIC'),
 		getBootTag('Denomination', args.denomination?.toString() ?? '1'),
 		getBootTag('TotalSupply', args.supply?.toString() ?? '1'),
 		getBootTag('Transferable', args.transferable?.toString() ?? 'true'),
