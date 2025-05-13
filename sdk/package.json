@@ -1,5 +1,5 @@
 {
-	"name": "@permaweb/libs",
+	"name": "@basejump-xyz/permaweb-libs",
 	"version": "0.0.35",
 	"type": "module",
 	"main": "./dist/index.cjs",
@@ -26,8 +26,12 @@
 	"license": "ISC",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/permaweb/permaweb-libs.git",
+		"url": "https://github.com/basejump-xyz/permaweb-libs.git",
 		"directory": "sdk"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com",
+		"access": "public"
 	},
 	"exports": {
 		".": {
@@ -39,7 +43,8 @@
 	},
 	"scripts": {
 		"format": "eslint --fix . && npx prettier --write .",
-		"build": "node build.js"
+		"build": "node build.js",
+		"prepublishOnly": "npm run build"
 	},
 	"dependencies": {
 		"@ardrive/turbo-sdk": "^1.23.1",
