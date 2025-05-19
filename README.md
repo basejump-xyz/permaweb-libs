@@ -1,37 +1,47 @@
+> ⚠️ **Note:** This is a fork of [`permaweb/permaweb-libs`](https://github.com/permaweb/permaweb-libs) to open up additional options when deploying atomic assets.
+
 # @permaweb/libs
 
 This SDK provides a set of libraries designed as foundational building blocks for developers to create and interact with applications on Arweave's permaweb. These libraries aim to contribute building on the composable web, promoting interoperability and reusability across decentralized applications. With libraries for managing profiles, atomic assets, collections, and more, this SDK simplifies the development of decentralized, permanent applications.
 
 ## Table of Contents
 
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Initialization](#initialization)
-- [Usage](#usage)
-  - [Zones](#zones)
-    - [createZone](#createzone)
-    - [updateZone](#updatezone)
-    - [getZone](#getzone)
-  - [Profiles](#profiles)
-    - [createProfile](#createprofile)
-    - [updateProfile](#updateprofile)
-    - [getProfileById](#getprofilebyid)
-    - [getProfileByWalletAddress](#getprofilebywalletaddress)
-  - [Atomic Assets](#atomic-assets)
-    - [createAtomicAsset](#createatomicasset)
-    - [getAtomicAsset](#getatomicasset)
-    - [getAtomicAssets](#getatomicassets)
-  - [Comments](#comments)
-    - [createComment](#createcomment)
-    - [getComment](#getcomment)
-    - [getComments](#getcomments)
-  - [Collections](#collections)
-    - [createCollection](#createcollection)
-    - [updateCollectionAssets](#updatecollectionassets)
-    - [getCollection](#getcollection)
-    - [getCollections](#getcollections)
-- [Examples](#examples)
-- [Resources](#resources)
+- [@permaweb/libs](#permaweblibs)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Initialization](#initialization)
+  - [Usage](#usage)
+    - [Zones](#zones)
+      - [`createZone`](#createzone)
+      - [`updateZone`](#updatezone)
+      - [`getZone`](#getzone)
+    - [Profiles](#profiles)
+      - [`createProfile`](#createprofile)
+      - [`updateProfile`](#updateprofile)
+      - [`getProfileById`](#getprofilebyid)
+      - [`getProfileByWalletAddress`](#getprofilebywalletaddress)
+    - [Atomic Assets](#atomic-assets)
+      - [`createAtomicAsset`](#createatomicasset)
+      - [`getAtomicAsset`](#getatomicasset)
+      - [`getAtomicAssets`](#getatomicassets)
+    - [Comments](#comments)
+      - [`createComment`](#createcomment)
+      - [`getComment`](#getcomment)
+      - [`getComments`](#getcomments)
+    - [Collections](#collections)
+      - [`createCollection`](#createcollection)
+      - [`updateCollectionAssets`](#updatecollectionassets)
+      - [`getCollection`](#getcollection)
+      - [`getCollections`](#getcollections)
+  - [Examples](#examples)
+    - [Key Features of This Example:](#key-features-of-this-example)
+    - [Provider Setup](#provider-setup)
+    - [Explanation:](#explanation)
+    - [Usage in a Component](#usage-in-a-component)
+  - [Contributions](#contributions)
+    - [How to Contribute](#how-to-contribute)
+  - [Resources](#resources)
 
 ## Prerequisites
 
@@ -192,13 +202,16 @@ ProfileProcessId;
 #### `updateProfile`
 
 ```typescript
-const profileId = await permaweb.updateProfile({
+const profileId = await permaweb.updateProfile(
+  {
     username: "My usename",
     displayName: "My display name",
     description: "My description",
     thumbnail: "Thumbnail image data",
     banner: "Banner image data",
-  }, profileId);
+  },
+  profileId
+);
 ```
 
 <details>
@@ -727,44 +740,47 @@ To streamline the integration of `@permaweb/libs` into your React applications, 
 The following example demonstrates how to create a React Context and Provider for `@permaweb/libs`.
 
 ```typescript
-import React from 'react';
+import React from "react";
 
-import Arweave from 'arweave';
-import { connect, createDataItemSigner } from '@permaweb/aoconnect';
-import Permaweb from '@permaweb/libs';
+import Arweave from "arweave";
+import { connect, createDataItemSigner } from "@permaweb/aoconnect";
+import Permaweb from "@permaweb/libs";
 
-import { useArweaveProvider } from './ArweaveProvider';
+import { useArweaveProvider } from "./ArweaveProvider";
 
 interface PermawebContextState {
-	libs: any | null;
+  libs: any | null;
 }
 
 const PermawebContext = React.createContext<PermawebContextState>({
-	libs: null,
+  libs: null,
 });
 
 export function usePermawebProvider(): PermawebContextState {
-	return React.useContext(PermawebContext);
+  return React.useContext(PermawebContext);
 }
 
 export function PermawebProvider(props: { children: React.ReactNode }) {
-	const arProvider = useArweaveProvider();
+  const arProvider = useArweaveProvider();
 
-	const [libs, setLibs] = React.useState<any>(null);
+  const [libs, setLibs] = React.useState<any>(null);
 
-	React.useEffect(() => {
-		const dependencies: any = { ao: connect(), arweave: Arweave.init({}) };
-		if (arProvider.wallet) {
-			dependencies.signer = createDataItemSigner(arProvider.wallet);
-		}
+  React.useEffect(() => {
+    const dependencies: any = { ao: connect(), arweave: Arweave.init({}) };
+    if (arProvider.wallet) {
+      dependencies.signer = createDataItemSigner(arProvider.wallet);
+    }
 
-		const permawebInstance = Permaweb.init(dependencies);
-		setLibs(permawebInstance);
-	}, [arProvider.wallet]);
+    const permawebInstance = Permaweb.init(dependencies);
+    setLibs(permawebInstance);
+  }, [arProvider.wallet]);
 
-	return <PermawebContext.Provider value={{ libs }}>{props.children}</PermawebContext.Provider>;
+  return (
+    <PermawebContext.Provider value={{ libs }}>
+      {props.children}
+    </PermawebContext.Provider>
+  );
 }
-
 ```
 
 ### Explanation:
@@ -807,16 +823,16 @@ export default function MyComponent() {
 
 Contributions to **@permaweb/libs** are welcome! Before submitting a new feature or service, please ensure that it:
 
-- **Aligns with the ecosystem**: Consider how the service can be broadly applicable across decentralized applications on Arweave. We strive to maintain composable, reusable, and interoperable building blocks.  
-- **Is interoperable**: New services or modules should easily integrate with existing modules (e.g., Profiles, Zones, Atomic Assets) to provide a cohesive developer experience.  
+- **Aligns with the ecosystem**: Consider how the service can be broadly applicable across decentralized applications on Arweave. We strive to maintain composable, reusable, and interoperable building blocks.
+- **Is interoperable**: New services or modules should easily integrate with existing modules (e.g., Profiles, Zones, Atomic Assets) to provide a cohesive developer experience.
 - **Includes documentation and tests**: Provide clear documentation, usage examples, and sufficient test coverage to ensure quality and maintainability.
 
 ### How to Contribute
 
-1. **Open an Issue**: Start by creating a new issue describing your proposal or bug fix. This helps gather feedback from the community and maintainers.  
-2. **Discuss**: Collaborate on the issue, refine the idea, and outline a plan.  
-3. **Implement**: Submit a Pull Request once you have a working solution. Please follow the existing code style and conventions.  
-4. **Review**: Engage in the review process—address comments, refine your code, and finalize changes.  
+1. **Open an Issue**: Start by creating a new issue describing your proposal or bug fix. This helps gather feedback from the community and maintainers.
+2. **Discuss**: Collaborate on the issue, refine the idea, and outline a plan.
+3. **Implement**: Submit a Pull Request once you have a working solution. Please follow the existing code style and conventions.
+4. **Review**: Engage in the review process—address comments, refine your code, and finalize changes.
 
 By ensuring new contributions are designed with the broader ecosystem in mind, we maintain a robust and versatile platform for permaweb developers.
 
