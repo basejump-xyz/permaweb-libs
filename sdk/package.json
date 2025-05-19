@@ -29,10 +29,6 @@
 		"url": "https://github.com/basejump-xyz/permaweb-libs.git",
 		"directory": "sdk"
 	},
-	"publishConfig": {
-		"registry": "https://npm.pkg.github.com",
-		"access": "public"
-	},
 	"exports": {
 		".": {
 			"import": "./dist/index.esm.js",
